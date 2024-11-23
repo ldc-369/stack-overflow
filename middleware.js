@@ -1,11 +1,11 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
-export default clerkMiddleware(async (auth, req) => {
+export default clerkMiddleware(/* async (auth, req) => {
   const { userId, redirectToSignIn } = await auth()
   if (!userId) {
     return redirectToSignIn()
   }
-})
+} */)
 
 export const config = {
   matcher: [
