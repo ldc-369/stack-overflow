@@ -1,5 +1,6 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
+import { createUser, DeleteUser, updateUser } from '@/actions/user/init'
 
 export async function POST (req) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET
@@ -52,6 +53,49 @@ export async function POST (req) {
   const eventType = evt.type
   console.log(`Received webhook with ID ${id} and event type of ${eventType}`)
   console.log('Webhook payload:', body)
+  // ==================================================
+  if (eventType === 'user.created') {
+    const { id, email_addresses, image_url, username, first_name, last_name } =
+      evt.data
 
+    const user = await createUser(
+      {
+        name: `${first_name}${last_name ? ` ${last_name}` : ''}`,
+        userName: username,
+        email: email_addresses[0].email_address,
+        imageUrl: image_url,
+        bio: '',
+        portfolioWebsite: ''
+      },
+      id
+    )
+    return NextResponse.json({ message: 'OK', user: user })
+  }
+
+  if (eventType === 'user.updated') {
+    const { email_addresses, image_url, username, first_name, last_name } =
+      evt.data
+
+    const values = {
+      name: `${first_name}${last_name ? ` ${last_name}` : ''}`,
+      userName: username,
+      email: email_addresses[0].email_address,
+      imageUrl: image_url,
+      bio: '',
+      portfolioWebsite: ''
+    }
+
+    const User = await updateUser(values, 'webhook')
+
+    return NextResponse.json({ message: 'OK', user: User })
+  }
+
+  if (eventType === 'user.deleted') {
+    const { id } = evt.data
+    const deletedUser = await DeleteUser(id)
+
+    return NextResponse.json({ message: 'OK', user: deletedUser })
+  }
+  // ===========================================
   return new Response('Webhook received', { status: 200 })
 }

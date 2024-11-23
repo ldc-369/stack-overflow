@@ -15,9 +15,9 @@ function LeftSidebar () {
   const pathname = usePathname()
   const router = useRouter()
 
-  if (!isLoaded || !isSignedIn) {
-    return null
-  }
+  // if (!isLoaded || !isSignedIn) {
+  //   return null
+  // }
 
   return (
     <div className='p-6 pt-32 h-screen sticky left-0 top-0 flex flex-col justify-between overflow-y-auto bg-light-800 shadow-lg dark:dark-gradient lg:w-[266px] max-sm:hidden light-border custom-scrollbar '>
@@ -30,9 +30,9 @@ function LeftSidebar () {
                 pathname === sidebarItem.path; */
           const Icon = isActive ? sidebarItem.ActiveIcon : sidebarItem.Icon
 
-          if (path === '/profile' && user.id) {
+          if (path === '/profile' && user?.id) {
             path = `${path}/${user.id}`
-          } else if (path === '/profile' && !user.id) {
+          } else if (path === '/profile' && !user?.id) {
             path = '/login'
           }
 
@@ -61,7 +61,7 @@ function LeftSidebar () {
           )
         })}
       </div>
-      <SignedIn>
+      <SignedOut>
         <div className='flex flex-col gap-3'>
           <Button
             onClick={() => router.push('/sign-in')}
@@ -83,7 +83,7 @@ function LeftSidebar () {
             </span>
           </Button>
         </div>
-      </SignedIn>
+      </SignedOut>
     </div>
   )
 }

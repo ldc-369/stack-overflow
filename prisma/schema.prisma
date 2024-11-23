@@ -12,3 +12,125 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id String @id @default(cuid())
+
+  name             String
+  userName         String  @map("user_name")
+  imageUrl         String? @map("image_url")
+  email            String  @unique
+  bio              String?
+  portfolioWebsite String? @map("portfolio_website")
+
+  questions Question[] @relation("user-questions")
+  // collection collection[]
+  upvotes   Upvote[]   @relation("user-upvotes")
+  downvotes Downvote[] @relation("user-downvotes")
+  tags      Tag[]      @relation("users-tags")
+  answers   Answer[]   @relation("user-answers")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Question {
+  id          String @id @default(cuid())
+  question    String
+  description String @db.Text
+
+  userId String @map("user_id")
+  user   User   @relation("user-questions", fields: [userId], references: [id], onDelete: Cascade)
+
+  // saves     collection[]
+  upvotes   Upvote[]   @relation("question-upvotes")
+  downvotes Downvote[] @relation("question-downvotes")
+  tags      Tag[]      @relation("questions-tags")
+  answers   Answer[]   @relation("question-answers")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("questions")
+}
+
+model Answer {
+  id     String @id @default(cuid())
+  answer String @db.Text
+
+  questionId String   @map("question_id")
+  question   Question @relation("question-answers", fields: [questionId], references: [id], onDelete: Cascade)
+
+  userId String @map("user_id")
+  user   User   @relation("user-answers", fields: [userId], references: [id], onDelete: Cascade)
+
+  upvotes   Upvote[]   @relation("answer-upvotes")
+  downvotes Downvote[] @relation("answer-downvotes")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("answers")
+}
+
+// model collection {
+//   id         String @id @default(cuid())
+//   questionId String
+//   userId     String
+
+//   user     user     @relation(fields: [userId], references: [userId], onDelete: Cascade)
+//   question question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+model Upvote {
+  id         String    @id @default(cuid())
+  questionId String?   @map("question_id")
+  question   Question? @relation("question-upvotes", fields: [questionId], references: [id], onDelete: Cascade)
+
+  answerId String? @map("answer_id")
+  answer   Answer? @relation("answer-upvotes", fields: [answerId], references: [id], onDelete: Cascade)
+
+  userId String @map("user_id")
+  user   User   @relation("user-upvotes", fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("upvotes")
+}
+
+model Downvote {
+  id String @id @default(cuid())
+
+  questionId String?   @map("question_id")
+  question   Question? @relation("question-downvotes", fields: [questionId], references: [id], onDelete: Cascade)
+
+  answerId String? @map("answer_id")
+  answer   Answer? @relation("answer-downvotes", fields: [answerId], references: [id], onDelete: Cascade)
+
+  userId String @map("user_id")
+  user   User   @relation("user-downvotes", fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("downvotes")
+}
+
+model Tag {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  questions Question[] @relation("questions-tags")
+
+  users User[] @relation("users-tags")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("tags")
+}
