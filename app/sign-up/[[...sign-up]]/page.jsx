@@ -5,9 +5,9 @@ export default function Page () {
   return (
     <AuthLayout>
       <SignUp
-        // signInUrl='/sign-in'
-        signInFallbackRedirectUrl='/'
-        path='/sign-up'
+      // signInUrl='/sign-in'
+      // signInFallbackRedirectUrl='/'
+      // path='/sign-up'
       />
     </AuthLayout>
   )
