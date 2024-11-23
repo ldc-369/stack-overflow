@@ -11,7 +11,7 @@
 -(npm install next-themes react-icons)
 -(git init)
 -(git add .)
--(git commit -m "first commit")
+-(git commit -m "commit")
 -(git branch -M main)
 -(git remote add origin https://github.com/ldc-369/stack-overflow.git)
 -(git push -u origin main)
