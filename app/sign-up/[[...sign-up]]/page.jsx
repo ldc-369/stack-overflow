@@ -4,7 +4,11 @@ import { SignUp } from '@clerk/nextjs'
 export default function Page () {
   return (
     <AuthLayout>
-      <SignUp fallbackRedirectUrl='/' signInUrl='/sign-in' path='/sign-up' />
+      <SignUp
+        signInUrl='/sign-in'
+        signInFallbackRedirectUrl='/'
+        path='/sign-up'
+      />
     </AuthLayout>
   )
 }
