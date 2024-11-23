@@ -5,7 +5,7 @@ export default function Page () {
   return (
     <AuthLayout>
       <SignUp
-        signInUrl='/sign-in'
+        // signInUrl='/sign-in'
         signInFallbackRedirectUrl='/'
         path='/sign-up'
       />
