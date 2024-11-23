@@ -9,5 +9,10 @@
 -(npx prisma db push)
 -(npx prisma studio)
 -(npm install next-themes react-icons)
--(git push)
+-(git init)
+-(git add .)
+-(git commit -m "first commit")
+-(git branch -M main)
+-(git remote add origin https://github.com/ldc-369/stack-overflow.git)
+-(git push -u origin main)
 2:20:10
