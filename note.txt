@@ -16,3 +16,4 @@
 -(git remote add origin https://github.com/ldc-369/stack-overflow.git)
 -(git push -u origin main)
 2:20:10
+"postinstall": "npm install --force"

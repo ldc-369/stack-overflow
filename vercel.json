@@ -1,8 +1,0 @@
-{
-    "env": {
-        "NODE_ENV": "production"
-    },
-    "scripts": {
-        "build": "npm install --force && npm run build"
-    }
-}
