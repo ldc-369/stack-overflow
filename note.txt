@@ -1,0 +1,13 @@
+-(npx create-next-app@latest .)
+-(npx shadcn@latest init)
+-(npx shadcn@latest add)=>(a)
+-(npm run dev)
+-(npm install next-themes @clerk/nextjs @prisma/client svix)
+-(npm i -D prisma)
+-(npx prisma init)
+-(npx prisma generate)
+-(npx prisma db push)
+-(npx prisma studio)
+-(npm install next-themes react-icons)
+-(git push)
+2:20:10
