@@ -1,4 +1,4 @@
--(npx create-next-app@latest .)
+-(npx create-next-app@14.2.18 .)
 -(npx shadcn@latest init)
 -(npx shadcn@latest add)=>(a)
 -(npm run dev)
@@ -16,4 +16,3 @@
 -(git remote add origin https://github.com/ldc-369/stack-overflow.git)
 -(git push -u origin main)
 2:20:10
-"postinstall": "npm install --force"
